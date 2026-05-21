@@ -1,7 +1,11 @@
 # MPI Vzporedno Reševanje Problema Trgovskega Potnika (TSP) s simuliranim ohlajanjem (SA) 
-Implementacija algoritma simuliranega ohlajanja (Simulated Annealing) za reševanje problema trgovskega potnika (TSP), paraleliziranega s pomočjo knjižnice MPI (mpi4py).
+Implementacija algoritma simuliranega ohlajanja (Simulated Annealing - SA) za reševanje problema trgovskega potnika (TSP), paraleliziranega s pomočjo knjižnice MPI (mpi4py).
 
-Zasnova naloge: Vsak MPI proces dobi drugačno začetno točko in neodvisno izvaja algoritem simulativnega ohlajanja. Skupno število iteracij se deli med procese (pri 500.000 iteracijah: 1 proces - vseh 500.000; 8 procesov - vsak 500.000/8=62.500)
+## 0. OPIS PROBLEMA IN REŠITVE
+   Cilj je najti najkrajšo pot, ki obišče vsa mesta točno enkrat in se vrne v začetno točko.
+
+   Zasnova naloge: Vsak MPI proces neodvisno izvaja SA algoritem na svoji naključni začetni poti. Po končanem izvajanju Master proces s funkcijo MPI_Reduce zbere vse najdene poti in izbere globalno najboljšo.
+   Za analizo se skupno število iteracij deli med procese (pri 500.000 iteracijah: 1 proces - vseh 500.000; 8 procesov - vsak 500.000/8=62.500), da bi ocenili pohitritev izvajanja.
 
 ## 1. NAVODILA ZA UPORABO
    
@@ -89,8 +93,9 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
   
   Pri meritvah je prišlo do kompromisa med hitrostjo in kakovostjo rešitve. Pri uporabi večjega števila jeder (4 in 8) se kakovost najdene poti drastično poslabša.
   Razlog je v zmanjšanem številu iteracij na proces (pri 8 procesih na samo 62.500), medtem ko je stopnja ohlajanja (COOLING_RATE) ostala nespremenjena. Algoritem se tako konča prehitro in se ujame v lokalni minimum, preden bi lahko našel boljšo rešitev.
-  Za boljši preiskani prostor rešitev bi lahko dodali večje število iteracij na proces (s tem porabili več časa, ampak dobili boljši rezultat).
+  Za boljši preiskani prostor rešitev bi lahko dodali večje število iteracij na proces (s tem porabili več časa, ampak dobili boljši rezultat). Če bi vsi procesi imeli enako število iteracij, ne glede na to koliko procesov se izvaja, bi pri večjem številu izvajanih procesov prišli do krajše poti.
 
   Pri algoritmu, kot je SA, paralelizacija ni le vprašanje moči, ampak strategije iskanja. Za ohranitev kakovosti pri večjem številu jeder, bi bilo potrebno prilagoditi parametre ohlajanja ali povečati število iteracij na proces, kar pa bi ponovno podaljšalo čas izvajanja.
+  
 
  
