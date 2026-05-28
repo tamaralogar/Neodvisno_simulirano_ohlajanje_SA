@@ -32,8 +32,15 @@ Implementacija algoritma simuliranega ohlajanja (Simulated Annealing - SA) za re
       python3 analyze2.py
 
 ## 2. REZULTATI MERITEV
+
+   Meritve so bile izvedene na prenosnem računalniku z 8 jedri. Testiranje je potekalo znotraj virtualnega okolja Kali Linux, 
+   ki so mu bila dodeljena vsa procesorska jedra (1 procesorsko gnezdo z 8 jedri).
    
-  Meritve so bile izvedene za 50 mest in skupno 500.000 iteracij.
+   <img width="193" height="57" alt="Slika Racunalnik" src="https://github.com/user-attachments/assets/787ece18-917e-4e16-b9e1-68250303143b" />
+
+   <img width="332" height="111" alt="Slika Kali" src="https://github.com/user-attachments/assets/75d80800-cd7e-4231-ae53-0b570b9557c6" />
+
+   Meritve so bile izvedene za 50 mest in skupno 500.000 iteracij.
 
  Procesov: 1
  
@@ -79,9 +86,10 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
   Pri 8 procesih je bil pospešek 4.56x. 
   Odmik od idealnega linearnega pospeška (8x) je pričakovan, ker morajo vsi procesi opraviti nekatere operacije: 
   
-    * inicializacijo Python okolja
-    * uvoz knjižnic
-    * izračun matrike razdalj
+    * Padci frekvence procesorja: pri obremenitvbi vseh procesorjev sistem preventivno zniža frekvenco vseh jeder
+    * Tekmovanje za predpomnilnik (L3 Cache)
+    * Režijski stroški virtualizacije: VMware porabi nekaj časa za koordinacijo 8 navideznih jeder na fizični strojni opremi
+    
   Analiza trenda matrike Karp-Flatt (e):
   
   Karp-Flattova metrika (e) nam podaja eksperimentalni vpogled v učinkovitost:
@@ -92,6 +100,9 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
   Identifikacija ozkih grl:
   
   Pri meritvah je prišlo do kompromisa med hitrostjo in kakovostjo rešitve. Pri uporabi večjega števila jeder (4 in 8) se kakovost najdene poti drastično poslabša.
+  
+  <img width="968" height="731" alt="Slika_kakovost_dolzine_poti" src="https://github.com/user-attachments/assets/95eac7f6-695e-4400-b5b6-2743c52f44ac" />
+
   Razlog je v zmanjšanem številu iteracij na proces (pri 8 procesih na samo 62.500), medtem ko je stopnja ohlajanja (COOLING_RATE) ostala nespremenjena. Algoritem se tako konča prehitro in se ujame v lokalni minimum, preden bi lahko našel boljšo rešitev.
   Za boljši preiskani prostor rešitev bi lahko dodali večje število iteracij na proces (s tem porabili več časa, ampak dobili boljši rezultat). Če bi vsi procesi imeli enako število iteracij, ne glede na to koliko procesov se izvaja, bi pri večjem številu izvajanih procesov prišli do krajše poti.
 
