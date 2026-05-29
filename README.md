@@ -83,15 +83,15 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 
 ### Pospešek:
   Čas izvajanja se z dodajanjem procesov zmanjšuje, ker se zmanjša število iteracij, ki jih posamezen proces izvede. 
+
+  <img width="663" height="449" alt="Slika_pospesek" src="https://github.com/user-attachments/assets/7f4e8a74-7549-4b03-96cd-66bfa82493bd" />
+  
   Pri 8 procesih je bil pospešek 4.56x. 
   Odmik od idealnega linearnega pospeška (8x) je pričakovan, ker morajo vsi procesi opraviti nekatere operacije: 
   
     * Padci frekvence procesorja: pri obremenitvbi vseh procesorjev sistem preventivno zniža frekvenco vseh jeder
     * Tekmovanje za predpomnilnik (L3 Cache)
     * Režijski stroški virtualizacije: VMware porabi nekaj časa za koordinacijo 8 navideznih jeder na fizični strojni opremi
-
-   <img width="663" height="449" alt="Slika_pospesek" src="https://github.com/user-attachments/assets/7f4e8a74-7549-4b03-96cd-66bfa82493bd" />
-
 
     
  ### Analiza trenda matrike Karp-Flatt (e):
