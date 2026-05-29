@@ -81,7 +81,7 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 
 ## 3.  INTERPRETACIJA REZULTATOV
 
-
+### Pospešek:
   Čas izvajanja se z dodajanjem procesov zmanjšuje, ker se zmanjša število iteracij, ki jih posamezen proces izvede. 
   Pri 8 procesih je bil pospešek 4.56x. 
   Odmik od idealnega linearnega pospeška (8x) je pričakovan, ker morajo vsi procesi opraviti nekatere operacije: 
@@ -89,15 +89,19 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
     * Padci frekvence procesorja: pri obremenitvbi vseh procesorjev sistem preventivno zniža frekvenco vseh jeder
     * Tekmovanje za predpomnilnik (L3 Cache)
     * Režijski stroški virtualizacije: VMware porabi nekaj časa za koordinacijo 8 navideznih jeder na fizični strojni opremi
+
+   <img width="663" height="449" alt="Slika_pospesek" src="https://github.com/user-attachments/assets/7f4e8a74-7549-4b03-96cd-66bfa82493bd" />
+
+
     
-  Analiza trenda matrike Karp-Flatt (e):
+ ### Analiza trenda matrike Karp-Flatt (e):
   
   Karp-Flattova metrika (e) nam podaja eksperimentalni vpogled v učinkovitost:
   Pri 2 procesih je vrednost nizka (0.0130). To pomeni, da je paralelizacija učinkovita.
   Z naraščanjem števila jeder vrednost naraste na 0.1079 (8 procesov). To kaže na to, da z večanjem števila jeder naraščajo režijski stroški operacijskega sistema (tekmovanje za procesorske vire).
   MPI komunikacija pa je v tem primeru minimalna.
     
-  Identifikacija ozkih grl:
+  ### Identifikacija ozkih grl:
   
   Pri meritvah je prišlo do kompromisa med hitrostjo in kakovostjo rešitve. Pri uporabi večjega števila jeder (4 in 8) se kakovost najdene poti drastično poslabša.
   
