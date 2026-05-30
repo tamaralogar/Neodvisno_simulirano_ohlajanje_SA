@@ -118,11 +118,14 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 
   Pri algoritmu, kot je SA, paralelizacija ni le vprašanje moči, ampak strategije iskanja. Za ohranitev kakovosti pri večjem številu jeder, bi bilo potrebno prilagoditi parametre ohlajanja ali povečati število iteracij na proces, kar pa bi ponovno podaljšalo čas izvajanja.
   
-# 4. SPREMEMBA ALGORITMA
+# 4. SPREMEMBA ALGORITMA ZA IZBOLJŠANJE KAKOVOSTI REŠITVE
 
-   Pri problemu TSA želimo vrniti najkrajšo pot, zato je implementacija algoritma, kjer se tudi pri več procesih izvede enako število iteracij na proces bolj smiselno (izvedba 500.000 iteracij pri 1 procesu in 500.000 iteracij na vsakem procesu pri 8 procesih).
+   Pri problemu TSA želimo vrniti najkrajšo pot, zato je implementacija algoritma, kjer se tudi pri več procesih izvede enako število iteracij na proces bolj smiselno (izvedba 500.000 iteracij pri 1 procesu in 500.000 iteracij na vsakem procesu pri 8 procesih). 
   
    ## 4.1. Sprememba algoritma
+   
+   Agoritem spremenimo, da ni več namenjen merjenju pospeška, ampak izboljšanju kakovosti rešitve.
+   
    Spremenimo datoteko tsp_sa.py: v funkciji def simulated_annealing v prvi for zanki poiščemo:
 
       for _ in range(local_iters):
@@ -167,10 +170,15 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 
 Pri večjem številu procesov se je izboljšala rešitev - najdena je bila krajša pot. 
 
+<img width="1132" height="556" alt="Slika2_kakovost_dolzine_poti" src="https://github.com/user-attachments/assets/df6d4a56-b426-4094-b4e2-300096b66c68" />
 
+Kakovost poti se ohranja ali celo izboljša pri več procesih (pri 8 procesih je najkrajša pot 5676, medtem je najkrajša pot pri 1 procesu 6037), ker več procesov pomeni večjo verjetnost, da vsaj eden najde boljšo rešitev.
 
-Pri 1 procesu je bila najkrajša pot 6037.0640, pri 8 procesih pa 5676.2246.
+Vsak proces zdaj opravi polnih 500.000 iteracij. Skupni računski napor pri 8 procesih je torej 8× večji kot v originalnem pristopu. 
 
-Podaljšal pa se je čas izvedbe. Pri 1 procesu je bil povprečen čas 9.074572s, pri 8 procesih pa 11.894164s.
+Ker procesi tečejo vzporedno na skupnih virih (skupni L3 cache, tekmovanje za jedra) se je čas izvedbe podaljšal. 
 
+<img width="1141" height="560" alt="Slika2_cas_izvajanja" src="https://github.com/user-attachments/assets/eb4516c3-f9d3-46b8-acbb-07dc1868ef0b" />
+
+Pri 1 procesu je bil povprečen čas 9.07s, pri 8 procesih pa 11.89s. Zato tudi ni smiselno računati pospeška in trenda matrike Karp-Flatt (e).
  
