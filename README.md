@@ -84,7 +84,9 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 ### Pospešek:
   Čas izvajanja se z dodajanjem procesov zmanjšuje, ker se zmanjša število iteracij, ki jih posamezen proces izvede. 
 
-  <img width="663" height="449" alt="Slika_pospesek" src="https://github.com/user-attachments/assets/7f4e8a74-7549-4b03-96cd-66bfa82493bd" />
+ 
+   <img width="663" height="449" alt="Slika_pospesek" src="https://github.com/user-attachments/assets/1e918c40-2927-487e-98b4-4645c2d15c61" />
+
   
   Pri 8 procesih je bil pospešek 4.56x. 
   Odmik od idealnega linearnega pospeška (8x) je pričakovan, ker morajo vsi procesi opraviti nekatere operacije: 
@@ -96,7 +98,11 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
     
  ### Analiza trenda matrike Karp-Flatt (e):
   
-  Karp-Flattova metrika (e) nam podaja eksperimentalni vpogled v učinkovitost:
+  Karp-Flattova metrika (e) nam podaja eksperimentalni vpogled v učinkovitost.
+
+   <img width="1150" height="869" alt="Slika_Karp_Flatt" src="https://github.com/user-attachments/assets/0ad8ab4c-f7cb-40fd-b819-00b8ba446fde" />
+
+  
   Pri 2 procesih je vrednost nizka (0.0130). To pomeni, da je paralelizacija učinkovita.
   Z naraščanjem števila jeder vrednost naraste na 0.1079 (8 procesov). To kaže na to, da z večanjem števila jeder naraščajo režijski stroški operacijskega sistema (tekmovanje za procesorske vire).
   MPI komunikacija pa je v tem primeru minimalna.
