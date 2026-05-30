@@ -118,5 +118,59 @@ REZULTATI ANALIZE ZMOGLJIVOSTI IN KVALITETE
 
   Pri algoritmu, kot je SA, paralelizacija ni le vprašanje moči, ampak strategije iskanja. Za ohranitev kakovosti pri večjem številu jeder, bi bilo potrebno prilagoditi parametre ohlajanja ali povečati število iteracij na proces, kar pa bi ponovno podaljšalo čas izvajanja.
   
+# 4. SPREMEMBA ALGORITMA
+
+   Pri problemu TSA želimo vrniti najkrajšo pot, zato je implementacija algoritma, kjer se tudi pri več procesih izvede enako število iteracij na proces bolj smiselno (izvedba 500.000 iteracij pri 1 procesu in 500.000 iteracij na vsakem procesu pri 8 procesih).
+  
+   ## 4.1. Sprememba algoritma
+   Spremenimo datoteko tsp_sa.py: v funkciji def simulated_annealing v prvi for zanki poiščemo:
+
+      for _ in range(local_iters):
+   in zamenjamo z:
+  
+      for _ in range(DEFAULT_ITERS):
+   Tako se število iteracij ne deli med procese, ampak vsak proces izvede 500.000 iteracij (ali kolikor jih nastavimo).
+   
+
+   ## 4.2. Rezultati meritev
+ Meritve so bile izvedene za 50 mest in 500.000 iteracij za vsak proces.
+
+--- Procesov: 1 ---
+
+        Zagon 1/3 ... 9.082366s | Pot: 6167.6681
+        Zagon 2/3 ... 8.994710s | Pot: 6037.0640
+        Zagon 3/3 ... 9.146640s | Pot: 6351.5794
+        Povprečni čas: 9.074572s | Najboljša pot konfiguracije: 6037.0640
+
+--- Procesov: 2 ---
+
+        Zagon 1/3 ... 9.448589s | Pot: 6016.9139
+        Zagon 2/3 ... 9.532317s | Pot: 5985.7287
+        Zagon 3/3 ... 9.322003s | Pot: 6249.7103
+        Povprečni čas: 9.434303s | Najboljša pot konfiguracije: 5985.7287
+
+--- Procesov: 4 ---
+
+        Zagon 1/3 ... 9.976959s | Pot: 5913.3661
+        Zagon 2/3 ... 10.014568s | Pot: 6074.1386
+        Zagon 3/3 ... 10.109385s | Pot: 5977.9835
+        Povprečni čas: 10.033637s | Najboljša pot konfiguracije: 5913.3661
+
+--- Procesov: 8 ---
+
+        Zagon 1/3 ... 11.845507s | Pot: 5987.6443
+        Zagon 2/3 ... 11.909621s | Pot: 5777.2658
+        Zagon 3/3 ... 11.927363s | Pot: 5676.2246
+        Povprečni čas: 11.894164s | Najboljša pot konfiguracije: 5676.2246
+
+## 4.3. Interpretacija rezultatov
+
+Pri večjem številu procesov se je izboljšala rešitev - najdena je bila krajša pot. 
+
+
+
+Pri 1 procesu je bila najkrajša pot 6037.0640, pri 8 procesih pa 5676.2246.
+
+Podaljšal pa se je čas izvedbe. Pri 1 procesu je bil povprečen čas 9.074572s, pri 8 procesih pa 11.894164s.
 
  
